@@ -1,0 +1,6 @@
+.idea
+.venv
+__pycache__
+
+# For macOS
+.DS_Store
