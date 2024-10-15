@@ -32,7 +32,7 @@ on:
 
 env:
   AWS_REGION: ap-east-1                 # e.g., us-west-1
-  ECR_REPOSITORY: MY_ECR_REPOSITORY           # Your Amazon ECR repository name
+  ECR_REPOSITORY: fyp           # Your Amazon ECR repository name
   IMAGE_TAG: ${{ github.sha }}                # Tagging the image with the commit SHA
 
 permissions:
