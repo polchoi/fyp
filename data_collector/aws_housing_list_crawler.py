@@ -423,7 +423,7 @@ def main():
     generate_need_update()
 
     file_name = "need_update.txt"
-    dir_path = "./housing_data/" + str(datetime.date.today())
+    dir_path = "s3://housing-listing-bucket/data" + str(datetime.date.today())
     if not os.path.exists(dir_path):
         os.makedirs(dir_path)
 
