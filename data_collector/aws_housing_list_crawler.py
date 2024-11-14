@@ -299,7 +299,7 @@ def generate_need_update():
     options.add_argument('--headless')  # Optional: run headless, comment out if you want to see the browser window
 
     # Initialize the driver
-    driver = webdriver.Chrome(executable_path='usr/bin/chromedriver', options=options)
+    driver = webdriver.Chrome(executable_path='/usr/bin/chromedriver', options=options)
 
     # URL of the first page to scrape
     base_url = "https://www.28hse.com/en/rent"
