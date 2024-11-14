@@ -503,8 +503,9 @@ current_date_str = datetime.date.today().strftime("%Y-%m-%d")
 log_filename = f"{current_date_str}-log.log"
 logging.basicConfig(filename=log_filename, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-# AWS S3 Bucket Name
+# AWS S3 Bucket Name and Region
 S3_BUCKET_NAME = "housing-listing-bucket"
+S3_BUCKET_REGION = "ap-east-1"  # Specify your S3 bucket region here
 
 def to_snake_case(s):
     """
@@ -681,8 +682,8 @@ def write_data(data, index):
     # Filename for the object in S3
     s3_filename = f"{index}.json"
 
-    # Initialize S3 client
-    s3 = boto3.client('s3')
+    # Initialize S3 client with specified region
+    s3 = boto3.client('s3', region_name=S3_BUCKET_REGION)
 
     try:
         # Upload the JSON string to S3
@@ -796,7 +797,7 @@ def generate_need_update():
     options.add_argument('--headless')  # Optional: run headless, comment out if you want to see the browser window
 
     # Initialize the driver
-    driver = webdriver.Chrome(executable_path='/usr/bin/chromedriver', options=options)
+    driver = webdriver.Chrome(executable_path='usr/bin/chromedriver', options=options)
 
     # URL of the first page to scrape
     base_url = "https://www.28hse.com/en/rent"
@@ -856,8 +857,8 @@ def generate_need_update():
 
     logging.info(f"Total Number of {len(property_ids)} IDs are Found")
 
-    # Read completed IDs from S3
-    s3 = boto3.client('s3')
+    # Initialize S3 client with specified region
+    s3 = boto3.client('s3', region_name=S3_BUCKET_REGION)
     completed_ids = set()
 
     try:
@@ -887,7 +888,8 @@ def merge_ids():
     Returns:
         None
     """
-    s3 = boto3.client('s3')
+    # Initialize S3 client with specified region
+    s3 = boto3.client('s3', region_name=S3_BUCKET_REGION)
 
     # Read need_update.txt from S3
     try:
@@ -938,7 +940,8 @@ def main():
     # Generate the need_update.txt file
     generate_need_update()
 
-    s3 = boto3.client('s3')
+    # Initialize S3 client with specified region
+    s3 = boto3.client('s3', region_name=S3_BUCKET_REGION)
 
     # Read need_update.txt from S3
     try:
