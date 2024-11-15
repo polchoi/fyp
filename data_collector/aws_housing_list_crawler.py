@@ -18,13 +18,19 @@ from botocore.exceptions import ClientError
 
 # AWS S3 Bucket Name and Region
 S3_BUCKET_NAME = "housing-listing-bucket"
-S3_BUCKET_REGION = "ap-east-1"
+S3_BUCKET_REGION = "ap-east-1" # Hong Kong
 
 # Get current date string
 current_date_str = datetime.date.today().strftime("%Y-%m-%d")
 
-# Logging configuration to log to a file named "{date}-log.log"
+# Log filename
 log_filename = f"{current_date_str}-log.log"
+
+# Remove existing log file if it exists
+if os.path.exists(log_filename):
+    os.remove(log_filename)
+
+# Logging configuration to log to a file named "{date}-log.log"
 logging.basicConfig(filename=log_filename, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def to_snake_case(s):
@@ -450,7 +456,7 @@ def merge_ids():
 
 def main():
     """
-    Main function to run the data collection process.
+    Main function that runs the data collection process.
 
     Returns:
         bool: True if the process completed successfully, False otherwise.
@@ -534,3 +540,10 @@ if __name__ == '__main__':
         logging.info(f"Log file {log_filename} uploaded to S3 bucket {S3_BUCKET_NAME} with key {log_s3_key}.")
     except Exception as e:
         logging.error(f"Failed to upload log file to S3: {e}")
+
+    # Shutdown logging to ensure all handlers are closed
+    logging.shutdown()
+
+    # Delete the local log file after uploading
+    if os.path.exists(log_filename):
+        os.remove(log_filename)
