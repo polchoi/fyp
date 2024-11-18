@@ -376,6 +376,7 @@ def generate_need_update():
         try:
             # Try to find the 'Next' button for pagination
             next_button = driver.find_element(By.CSS_SELECTOR, 'a.item[attr1="plus"]')
+            driver.execute_script("arguments[0].scrollIntoView();", next_button)
 
             # If the 'Next' button is found and clickable, click it
             if next_button.is_enabled():
