@@ -327,8 +327,25 @@ def generate_need_update():
     base_url = "https://www.28hse.com/en/rent"
     driver.get(base_url)
 
-    # List to store property IDs
+    time.sleep(3)
+    
+    # Locate all pagination links
+    pagination_items = driver.find_elements(By.CSS_SELECTOR, ".ui.menu.pagination a.item:not(.disabled)")
+
+    # Extract the page numbers
+    page_numbers = []
+    for item in pagination_items:
+        attr_value = item.get_attribute("attr1")
+        if attr_value and attr_value.isdigit():
+            page_numbers.append(int(attr_value))
+
+    # Get the maximum page number
+    if page_numbers:
+        max_page = max(page_numbers)
+    else:
+        logging.info("No page numbers found.")
     property_ids = []
+    logging.info(f"Extracted maximum page number: {max_page}")
 
     page_count = 0
     while True:
@@ -348,7 +365,7 @@ def generate_need_update():
 
             # Edge Case
             # if page_count == 2000:
-            if page_count == 2:  # TEST
+            if page_count == max_page:  # TEST
                 break
 
         except Exception as e:
