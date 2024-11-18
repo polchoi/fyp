@@ -350,7 +350,7 @@ def generate_need_update():
     page_count = 0
     while True:
         # Wait for the page to load
-        time.sleep(random.randint(2, 2))
+        time.sleep(random.randint(3, 4))
         try:
             # Find all property elements on the current page
             properties = driver.find_elements(By.CLASS_NAME, "detail_page")
