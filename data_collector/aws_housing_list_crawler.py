@@ -387,6 +387,7 @@ def generate_need_update():
 
         except Exception as e:
             # If 'Next' button is not found or any error occurs, stop scraping (no more pages)
+            print(e)
             logging.info("No more pages or error with Next button. Scraping complete.")
             break
 
